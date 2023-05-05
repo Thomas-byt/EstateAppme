@@ -6,8 +6,7 @@ namespace EstateApp.Data.DatabaseContexts.AuthenticationDbContext
 {
     public class AuthenticationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public AuthenticationDbContext(DbContextOptions<AuthenticationDbContext> options)
-        : base(options)
+        public AuthenticationDbContext(DbContextOptions<AuthenticationDbContext> options): base(options)
         {
             
         }

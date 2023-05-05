@@ -1,7 +1,38 @@
+using EstateApp.Data.DatabaseContexts.ApplicationDbContext;
+using EstateApp.Data.DatabaseContexts.AuthenticationDbContext;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+/* builder.Services.AddDbContextPool<AuthenticationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AuthenticationConnection"),
+sqlServerOptions => 
+{
+    sqlServerOptions.MigrationsAssembly("EstateApp.Data");
+}
+));
+
+builder.Services.AddDbContextPool<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ApplicationConnection"), 
+sqlServerOptions => {
+    sqlServerOptions.MigrationsAssembly("EstateApp.Data");
+})); */
+
+builder.Services.AddDbContextPool<AuthenticationDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("AuthenticationConnection"), 
+mysqlOptions => {
+    mysqlOptions.MigrationsAssembly("EstateApp.Data");
+}
+));
+
+builder.Services.AddDbContextPool<ApplicationDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("ApplicationConnection"), 
+mysqlOptions => 
+{
+    mysqlOptions.MigrationsAssembly("EstateApp.Data");
+}));
+
+
 
 var app = builder.Build();
 
